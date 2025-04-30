@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marsias</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Firebase kütüphaneleri -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-storage-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+    
+    <!-- Three.js için Import Map -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+          "three/examples/jsm/controls/OrbitControls.js": "https://unpkg.com/three@0.128.0/examples/jsm/controls/OrbitControls.js",
+          "three/examples/jsm/loaders/GLTFLoader.js": "https://unpkg.com/three@0.128.0/examples/jsm/loaders/GLTFLoader.js"
+        }
+      }
+    </script>
+    
+    <!-- dat.gui için CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.7.7/dat.gui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+<body>
+
+
+    <header>
+        <div class="header-content">
+          <a href="#home" class="logo">Marsias</a>
+          <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">
+            <span class="hamburger"></span>
+          </button>
+          <nav class="main-nav" aria-label="Main navigation">
+            <ul>
+              <li><a href="#home">Ana Sayfa</a></li>
+              <li class="has-dropdown" >
+                <a href="#services" aria-haspopup="true" aria-expanded="false">Hizmetler</a>
+                <ul class="dropdown">
+                  <li><a href="#hakkimizda" class="active">Hakkımızda</a></li>
+                  <li><a href="#ekoller">Ekollerimiz</a></li>
+                  <li><a href="#hiyerarsi">Hiyerarşi</a></li>
+                  <li><a href="#yolharitasi">Yol Haritası</a></li>
+                </ul>
+              </li>
+              <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="menu-overlay" aria-hidden="true"></div>
+      </header>
+
+
+  <!-- Hero Section with Parallax -->
+  <section class="hero parallax-container" id="anasayfa">
+    <div class="model-showcase">
+      <div id="3d-container" style="width: 100%; height: 800px !important; margin-bottom: 0px;"></div>
+    </div>
+  </section>
+
+  <section class="misyon-vizyon" id="misyon-vizyon">
+    <div class="container">
+        <!-- Başlık Alanı -->
+        <div class="baslik-alani animate-fadeInUp">
+            <h2 class="section-title">Misyon ve Vizyonumuz</h2>
+        </div>
+        
+        <!-- Ana İçerik -->
+        <div class="icerik" id="hakkimizda">
+            <!-- Misyon Alanı -->
+            <div class="misyon-alani animate-fadeInUp delay-100">
+                <div class="ikon-baslik">
+                    <div class="ikon icon-misyon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <h3 class="alt-baslik">Misyonumuz</h3>
+                </div>
+                <p class="aciklama">
+                    Marsıas, hem bir şirket hem de bağımsız bir ekol olarak, disiplinlerarası bir yaklaşım benimseyen ve geleceği şekillendirmeyi amaçlayan yenilikçi bir ekosistemdir. Yenilikçi projeler geliştirerek bunları küresel pazarlara taşıma kabiliyetine sahip olan Marsıas, girişimciler ve yaratıcı bireyler için farklı fırsatlar sunarak toplumsal ve ekonomik kalkınmaya katkı sağlamayı hedefler.
+                </p>
+                <ul class="degerler-listesi">
+                    <li class="animate-fadeInUp delay-200">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Geleceği şekillendiren projeler geliştiririz.</span>
+                    </li>
+                    <li class="animate-fadeInUp delay-300">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Dijital dönüşümleri fırsata dönüştürürüz.</span>
+                    </li>
+                    <li class="animate-fadeInUp delay-400">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Sürekli değişim ve yeniliğe açıklık gösteririz.</span>
+                    </li>
+                    <li class="animate-fadeInUp delay-500">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Multidisipliner iş birliği ile verimli çözümler üretiriz.</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Vizyon Alanı -->
+            <div class="vizyon-alani animate-fadeInUp delay-200">
+                <div class="ikon-baslik">
+                    <div class="ikon icon-vizyon">
+                        <i class="fas fa-binoculars"></i>
+                    </div>
+                    <h3 class="alt-baslik">Vizyonumuz</h3>
+                </div>
+                <p class="aciklama">
+                    Teknolojinin ve sosyal yapıların yakınlaştığı bu yeni dönemde, Marsıas liderlik ve yenilikçi düşünceyle; yaratıcı toplum, sürdürülebilirlik ve eğitim odaklı projelerle toplumsal ve ekonomik dönüşüme yön veren, küresel ölçekte etki yaratan bir ekosistem olmayı amaçlar.
+                </p>
+                <div class="vizyon-hedefler">
+                    <div class="hedef animate-fadeInUp delay-300">
+                        <div class="hedef-ikon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="hedef-icerik">
+                            <h4>Teknolojik ve Sosyal Yakınsama</h4>
+                            <p>Farklı disiplinleri birleştirerek daha etkili ve verimli sistemler oluşturmak.</p>
+                        </div>
+                    </div>
+                    <div class="hedef animate-fadeInUp delay-400">
+                        <div class="hedef-ikon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="hedef-icerik">
+                            <h4>Yaratıcı Toplum</h4>
+                            <p>Bireylerin yenilikçi fikirlerini destekleyerek toplumsal gelişimi hızlandırmak.</p>
+                        </div>
+                    </div>
+                    <div class="hedef animate-fadeInUp delay-500">
+                        <div class="hedef-ikon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="hedef-icerik">
+                            <h4>Eğitim ve Sürdürülebilirlik</h4>
+                            <p>Teknoloji odaklı programlarla geleceğin liderlerini çevreye duyarlı projelere hazırlamak.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Değerlerimiz -->
+        <div class="degerlerimiz animate-fadeInUp delay-300">
+            <h3 class="alt-baslik">Temel Değerlerimiz</h3>
+            <div class="degerler-container">
+                <div class="deger-item animate-fadeInUp delay-400">
+                    <div class="deger-ikon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h4>Ekip Çalışması</h4>
+                    <p>Ortak hedefler doğrultusunda işbirliği yaparak başarıya ulaşırız.</p>
+                </div>
+                <div class="deger-item animate-fadeInUp delay-500">
+                    <div class="deger-ikon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h4>Mükemmeliyetçilik</h4>
+                    <p>Her işimizde en yüksek kaliteyi hedefleyerek çalışırız.</p>
+                </div>
+                <div class="deger-item animate-fadeInUp delay-600">
+                    <div class="deger-ikon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h4>Yenilikçilik</h4>
+                    <p>Sürekli kendimizi geliştirerek yeni çözümler üretiriz.</p>
+                </div>
+                <div class="deger-item animate-fadeInUp delay-700">
+                    <div class="deger-ikon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>Müşteri Sevgisi</h4>
+                    <p>Müşteri memnuniyetini her zaman önceliğimiz yaparız.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Kaliteli Hizmet & Profesyonel Ekip -->
+        <div class="icerik hizmet-ekip-bolumu">
+            <!-- Sol Taraf (Metin İçeriği) -->
+            <div class="sol-taraf animate-fadeInUp delay-100">
+                <h3 class="alt-baslik">Kaliteli Hizmet & Profesyonel Ekip</h3>
+                <p class="aciklama">
+                    Firmamız, 20 yılı aşkın sektör deneyimi ile müşterilerimizin ihtiyaçlarına yönelik yenilikçi çözümler sunmaktadır. Uzman kadromuz ve modern yaklaşımımızla sektörde fark yaratıyor, müşterilerimizin beklentilerini aşan sonuçlar elde ediyoruz. Sürekli gelişim ve kalite odaklı çalışma prensibiyle her projede en iyisini hedefliyoruz.
+                </p>
+                
+                <!-- Özellikler -->
+                <div class="ozellikler">
+                    <div class="ozellik animate-fadeInUp delay-200">
+                        <div class="ikon icon-kalite">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4>Kalite</h4>
+                        <p>En yüksek kalite standartlarında hizmet sunuyoruz. Her detaya gösterdiğimiz özen, müşteri memnuniyetinin temelidir.</p>
+                    </div>
+                    
+                    <div class="ozellik animate-fadeInUp delay-300">
+                        <div class="ikon icon-yenilik">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <h4>Yenilikçilik</h4>
+                        <p>Sektördeki en son teknolojileri ve yaklaşımları takip ederek, müşterilerimize her zaman en iyisini sunuyoruz.</p>
+                    </div>
+                    
+                    <div class="ozellik animate-fadeInUp delay-400">
+                        <div class="ikon icon-guven">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <h4>Güvenilirlik</h4>
+                        <p>Verdiğimiz sözleri tutarak, projelerimizi zamanında ve beklentileri karşılayacak şekilde tamamlıyoruz.</p>
+                    </div>
+                </div>
+            </div>
+    
+                        
+                        <!-- Sağ Taraf (Resim) -->
+                        <div class="sag-taraf animate-fadeInUp delay-200">
+                            <div class="resim-kutusu">
+                                <img src="images/ekip.png" alt="Ekibimiz">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+                
+            <section class="teams-section" id="ekoller">
+                <div class="container">
+                  <div class="section-header">
+                    <h2 class="section-title">Ekollerimiz</h2>
+                    <p class="section-description">Uzman ve deneyimli ekiplerimizle yenilikçi çözümler sunuyoruz</p>
+                  </div>
+                  
+                  <div class="teams-container">
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Auros.png" alt="Yapay Zeka Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Yapay Zeka Ekolü</h3>
+                        <p class="team-description">Veri bilimi, derin öğrenme ve görüntü işleme alanlarında yenilikçi çözümler geliştirir, ileri seviye algoritmalarla projelere değer katar.</p>
+                      </div>
+                    </div>
+              
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Pan.png" alt="Siber Güvenlik Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Siber Güvenlik Ekolü</h3>
+                        <p class="team-description">Red Team ve Blue Team uzmanlarıyla siber tehditlere karşı kapsamlı güvenlik çözümleri sunar, eğitim ve danışmanlık hizmetleri verir.</p>
+                      </div>
+                    </div>
+              
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Apemia.png" alt="Web Geliştirme Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Web Geliştirme Ekolü</h3>
+                        <p class="team-description">Modern frontend ve backend teknolojileriyle kullanıcı dostu, yüksek performanslı web uygulamaları geliştirir ve eğitim programları sunar.</p>
+                      </div>
+                    </div>
+              
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Elis.png" alt="Veri Bilim Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Veri Bilim Ekolü</h3>
+                        <p class="team-description">Veri analitiği, makine öğrenmesi ve öngörücü modelleme ile işletmelere veri odaklı karar alma süreçlerinde destek sağlar.</p>
+                      </div>
+                    </div>
+              
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Muses.png" alt="Mobil Uygulama Geliştirme Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Mobil Uygulama Geliştirme Ekolü</h3>
+                        <p class="team-description">iOS ve Android platformları için yenilikçi, kullanıcı odaklı mobil uygulamalar tasarlar ve geliştirir.</p>
+                      </div>
+                    </div>
+              
+                    <div class="team-card">
+                      <div class="team-image">
+                        <img src="images/Sales.png" alt="Pazarlama Ekolü">
+                      </div>
+                      <div class="team-info">
+                        <h3 class="team-name">Pazarlama Ekolü</h3>
+                        <p class="team-description">Dijital ve geleneksel pazarlama stratejileriyle markaların hedef kitlelerine ulaşmasını sağlar, etkili reklam kampanyaları yürütür.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              
+              <div class="container">
+              
+                <div class="section-header" id="hiyerarsi">
+                    <h1 class="section-title">Kuruluş Hiyerarşisi</h1>
+                  </div>
+
+                <div class="pyramid">
+                    <div class="level" id="level1" onclick="showInfo('lider')">Lider</div>
+                    <div class="level" id="level2" onclick="showInfo('konsey')">Yüksek Konsey</div>
+                    <div class="level" id="level3" onclick="showInfo('yonetici')">Yönetici Ekibi</div>
+                    <div class="level" id="level4" onclick="showInfo('ekol')">Ekoller</div>
+                    <div class="level" id="level5" onclick="showInfo('uye')">Üyeler</div>
+                </div>
+        
+                <div class="info-panel" id="info-lider">
+                    <div class="info-title">Lider</div>
+                    <div class="info-description">Kuruluşun en üst düzey yöneticisi. Kritik kararları alır ve stratejik vizyonu belirler.</div>
+                </div>
+        
+                <div class="info-panel" id="info-konsey">
+                    <div class="info-title">Yüksek Konsey</div>
+                    <div class="info-description">Lidere en yakın danışma kurulu. Kurumun politikalarını ve uzun vadeli hedeflerini şekillendirir.</div>
+                </div>
+        
+                <div class="info-panel" id="info-yonetici">
+                    <div class="info-title">Yönetici Ekibi</div>
+                    <div class="info-description">Günlük operasyonları yöneten ve stratejileri uygulayan orta düzey yöneticiler.</div>
+                </div>
+        
+                <div class="info-panel" id="info-ekol">
+                    <div class="info-title">Ekoller</div>
+                    <div class="info-description">Farklı uzmanlık alanlarında faaliyet gösteren çalışma grupları ve departmanlar.</div>
+                </div>
+        
+                <div class="info-panel" id="info-uye">
+                    <div class="info-title">Üyeler</div>
+                    <div class="info-description">Kuruluşun temelini oluşturan ve çeşitli rollerde görev alan tüm üyeler.</div>
+                </div>
+            </div>
+                
+            <div class="section-header" id="yolharitasi">
+                <h1 class="section-title" style="margin-top: 100px;">Yeni üyeler için yol haritası</h1>
+              </div>
+
+                <div class="intro">
+                    <p>Topluluğumuza hoş geldiniz! Aşağıdaki adımları takip ederek, komünitemize sorunsuz bir şekilde entegre olabilir ve tüm avantajlardan yararlanabilirsiniz.</p>
+                </div>
+                
+                <section class="roadmap" aria-label="Yeni Üye Yol Haritası">
+                    <div class="step" role="group" aria-label="Adım 1: Üye Bilgilendirme">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">📝</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Üye Bilgilendirme</h3>
+                                <p class="step-description">Üye bilgilendirme formunu iyice okumalısın. Bu form, topluluğumuzun kurallarını, değerlerini ve sana sunduğu fırsatları detaylı olarak açıklamaktadır.</p>
+                                <div class="step-details">
+                                    <h4>Önemli Noktalar:</h4>
+                                    <ul>
+                                        <li>Topluluk değerleri ve kuralları</li>
+                                        <li>Haklar ve sorumluluklar</li>
+                                        <li>Etkinlik katılım bilgileri</li>
+                                        <li>Gizlilik politikası</li>
+                                    </ul>
+                                    <a href="#" class="cta-button" aria-label="Üye bilgilendirme formunu indir">Bilgilendirme Formunu İndir</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" role="group" aria-label="Adım 2: Profil Paylaşımı">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">🔍</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Profil Paylaşımı</h3>
+                                <p class="step-description">İlgilendiğin alana göre; Github veya LinkedIn profilini paylaşmalısın. Bu, benzer ilgi alanlarına sahip diğer üyelerle bağlantı kurmanı kolaylaştıracaktır.</p>
+                                <div class="step-details">
+                                    <h4>Profil Gereksinimleri:</h4>
+                                    <ul>
+                                        <li>Yazılım/Teknoloji alanında iseniz Github profiliniz</li>
+                                        <li>İş/Kariyer alanında iseniz LinkedIn profiliniz</li>
+                                        <li>Profiliniz güncel ve detaylı olmalıdır</li>
+                                        <li>Uzmanlık alanlarınızı belirtmelisiniz</li>
+                                    </ul>
+                                    <a href="#" class="cta-button" aria-label="Profil paylaşım formunu doldur">Profil Paylaşım Formu</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" role="group" aria-label="Adım 3: Signal Grupları">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">👥</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Signal Grupları</h3>
+                                <p class="step-description">Komünite grubunda tüm üyelerin varlığı zorunludur. İletişim ve duyurular ağırlıklı olarak Signal üzerinden gerçekleştirilmektedir.</p>
+                                <div class="step-details">
+                                    <h4>Signal Gruplarımız:</h4>
+                                    <ul>
+                                        <li>Ana Komünite Grubu (Zorunlu)</li>
+                                        <li>Uzmanlık Alan Grupları</li>
+                                        <li>Proje Bazlı Gruplar</li>
+                                        <li>Etkinlik Grupları</li>
+                                    </ul>
+                                    <a href="#" class="cta-button" aria-label="Signal grubuna katıl">Signal Grubuna Katıl</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" role="group" aria-label="Adım 4: Ekoller">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">🎯</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Ekoller</h3>
+                                <p class="step-description">Bir ekolde yer almak istiyorsan, bunu açıkça belirtmelisin. Temsilciler ve Ekol Liderleri sana yardımcı olacaktır.</p>
+                                <div class="step-details">
+                                    <h4>Mevcut Ekollerimiz:</h4>
+                                    <ul>
+                                        <li>Yazılım Geliştirme Ekolü</li>
+                                        <li>Yapay Zeka ve Veri Bilimi Ekolü</li>
+                                        <li>Tasarım ve UX Ekolü</li>
+                                        <li>Girişimcilik ve İnovasyon Ekolü</li>
+                                    </ul>
+                                    <a href="#" class="cta-button" aria-label="Ekol başvuru formunu doldur">Ekol Başvuru Formu</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" role="group" aria-label="Adım 5: Etkinliklere Katılım">
+                        <div class="step-number">5</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">🗓️</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Etkinliklere Katılım</h3>
+                                <p class="step-description">Topluluğumuzda düzenli olarak gerçekleştirilen etkinliklere katılım, ağ kurmanız ve gelişiminiz için önemlidir.</p>
+                                <div class="step-details">
+                                    <h4>Etkinlik Türleri:</h4>
+                                    <ul>
+                                        <li>Aylık Toplantılar</li>
+                                        <li>Çalıştaylar ve Seminerler</li>
+                                        <li>Networking Buluşmaları</li>
+                                        <li>Proje Sunumları</li>
+                                    </ul>
+                                    <a href="#" class="cta-button" aria-label="Etkinlik takvimini görüntüle">Etkinlik Takvimini Gör</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="step" role="group" aria-label="Adım 6: Katkı ve Proje Çalışmaları">
+                        <div class="step-number">6</div>
+                        <div class="step-content">
+                            <i class="step-icon" aria-hidden="true">💡</i>
+                            <div class="step-text">
+                                <h3 class="step-title">Katkı ve Proje Çalışmaları</h3>
+                                <p class="step-description">Topluluğa katkıda bulunmak ve projelerimizde yer almak, deneyiminizi artırmanın en iyi yollarından biridir.</p>
+                                <div class="step-details">
+                                    <h4>Katkı Alanları:</h4>
+                                    <ul>
+                                        <li>Açık Kaynak Projeleri</li>
+                                        <li>İçerik Üretimi</li>
+                                        <li>Mentorluk Programları</li>
+                                        <li>Organizasyon Desteği</li>
+                                    </ul>
+                                    <button class="cta-button" aria-label="Proje havuzunu incele" onclick="showAlert()">Proje Havuzunu İncele</button>
+
+                                    <div id="customAlert" class="alert-box">
+                                      Proje havuzu henüz hazır değil. Lütfen daha sonra tekrar deneyin.
+                                      <span class="alert-close" onclick="hideAlert()">×</span>
+                                    </div>                        </div>
+                    </div>
+                </section>
+                
+                <div class="conclusion">
+                    <h3>Hızlı Bir Başlangıç İçin</h3>
+                    <p>Yol haritasını tamamlamak için ortalama kısa bir süre yeterlidir. Herhangi bir sorunuz olduğunda yönetim ekibimiz size yardımcı olmaktan mutluluk duyacaktır.</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="contact-icon" aria-hidden="true">📧</i>
+                            <span>team.marsias@gmail.com</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <section class="contact-us marble" id="iletisim">
+
+                <div class="decor-4 abstract-decor"></div>
+                <div class="texture-overlay"></div>
+                
+                <div class="container">
+                    <div class="section-header">
+                        <div class="section-title">
+                            <span class="title-decorator"></span>
+                            <h2>Mesaj Gönder</h2>
+                            <span class="title-decorator"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="glassmorphism" data-aos="fade-up">
+                        <form id="contact-form">
+                            <div class="form-grid">
+                                <!-- Ad Soyad -->
+                                <div class="form-group animated-input">
+                                    <input type="text" id="name" name="name" placeholder=" " required>
+                                    <label for="name">Ad Soyad</label>
+                                    <div class="input-effect"></div>
+                                </div>
+                                
+                            <!-- E-posta -->
+                            <div class="form-group animated-input">
+                                <input type="email" id="email" name="email" placeholder=" " required>
+                                <label for="email">E-posta Adresiniz</label>
+                                <div class="input-effect"></div>
+                            </div>
+                            
+                            <!-- Telefon -->
+                            <div class="form-group animated-input">
+                                <input type="tel" id="phone" name="phone" placeholder=" " required>
+                                <label for="phone">Telefon Numarası</label>
+                                <div class="input-effect"></div>
+                            </div>
+                            
+                            <!-- Özel İstekler -->
+                            <div class="form-group animated-input">
+                                <textarea id="message" name="message" placeholder=" " rows="4"></textarea>
+                                <label for="message">Belirtmek İstediğiniz Mesaj</label>
+                                <div class="input-effect"></div>
+                            </div>
+                            
+                            <!-- Form Gönder Butonu -->
+                            <div class="form-submit">
+                                <button type="submit" class="btn btn-primary btn-gradient">
+                                    <span class="btn-text">Mesaj Gönder</span>
+                                    <span class="btn-icon">
+                                        <span class="custom-icon icon-check"></span>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </section>
+   
+<!-- Footer -->
+<footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <a href="#home" class="logo">Marsias</a>
+          <p>Yenilikçi çözümlerle geleceğe yön veriyoruz</p>
+        </div>
+        <div class="footer-section">
+          <h3>Hızlı Bağlantılar</h3>
+          <nav aria-label="Footer navigation">
+            <ul>
+              <li><a href="#hakkimizda">Hakkımızda</a></li>
+              <li><a href="#ekoller">Ekollerimiz</a></li>
+              <li><a href="#hiyerarsi">Hiyerarşi</a></li>
+              <li><a href="#yolharitasi">Yol Haritası</a></li>
+              <li><a href="#iletisim">İletişim</a></li>
+            </ul>
+          </nav>
+        </div>
+        <div class="footer-section">
+          <h3>İletişim Bilgileri</h3>
+          <p>Kütahya, Türkiye</p>
+          <p><a href="mailto:team.marsias@gmail.com">team.marsias@gmail.com</a></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Marsias. Tüm hakları saklıdır.</p>
+      </div>
+    </div>
+  </footer>
+  
+  <button class="scroll-btn" id="scrollBtn">
+    <svg class="flute-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+      <!-- Daha gerçekçi flüt ikonu -->
+      <path d="M470 112H42c-5.5 0-10 4.5-10 10v30c0 5.5 4.5 10 10 10h18v228c0 5.5 4.5 10 10 10h372c5.5 0 10-4.5 10-10V162h18c5.5 0 10-4.5 10-10v-30c0-5.5-4.5-10-10-10zM422 360H90V162h332v198z" fill="#8B4513"/>
+      <!-- Flüt delikleri -->
+      <circle cx="130" cy="260" r="12" fill="#1A1A1A"/>
+      <circle cx="180" cy="260" r="12" fill="#1A1A1A"/>
+      <circle cx="230" cy="260" r="12" fill="#1A1A1A"/>
+      <circle cx="280" cy="260" r="12" fill="#1A1A1A"/>
+      <circle cx="330" cy="260" r="12" fill="#1A1A1A"/>
+      <circle cx="380" cy="260" r="12" fill="#1A1A1A"/>
+      <!-- Flüt gövdesi vurguları -->
+      <path d="M90 152v218h332V152H90zm10 20h312v178H100V172z" fill="#A0522D"/>
+      <!-- Ağızlık kısmı -->
+      <path d="M70 162h20v198H70z" fill="#8B4513"/>
+      <path d="M50 192h20v140H50z" fill="#A0522D"/>
+    </svg>
+  </button>
+
+</body>
+<script src="script.js"></script>
+<script type="module" src="three.js"></script></html>
+<script type="module" src="mail.js"></script></html>
