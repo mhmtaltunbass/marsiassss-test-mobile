@@ -2189,83 +2189,60 @@ section.highlight {
     }
   }
   
-/* Genel kart stilleri */
-.team-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.team-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.team-card:focus-within {
-  outline: 2px solid var(--primary-color);
-  outline-offset: 2px;
-}
-
-.team-image {
-  width: 100%;
-  overflow: hidden;
-}
-
-.team-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.team-info {
-  padding: 15px;
-}
-
-.team-name {
-  margin: 0 0 10px;
-  color: #fff;
-}
-
-.team-description {
-  margin: 0;
-  color: #ccc;
-}
-
+  @media (max-width: 992px) {
+    .teams-section {
+      padding: 90px 0;
+    }
+    .teams-container {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .section-title {
+      font-size: 38px;
+    }
+    .team-card {
+      max-width: 100%;
+    }
+  }
+  
 /* Mobil cihazlar için (768px ve altı) */
 @media (max-width: 768px) {
   .teams-container {
-    grid-template-columns: repeat(1, 1fr);
-    gap: 20px;
-    overflow-x: hidden;
+    grid-template-columns: repeat(1, 1fr); /* Tek sütun */
+    gap: 20px; /* Kartlar arası boşluk */
   }
 
   .team-card {
-    max-width: 100%;
-    margin: 0 auto;
+    max-width: 100%; /* Kartlar tam genişlik kaplasın */
+    margin: 0 auto; /* Ortalanmış görünüm */
   }
 
   .team-image {
-    height: auto;
-    aspect-ratio: 16 / 9;
+    height: auto; /* Sabit yükseklik yerine orantılı */
+    aspect-ratio: 16 / 9; /* Resim için esnek oran */
+    overflow: hidden; /* Taşmayı önle */
+  }
+
+  .team-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Resim kırpılsın ama orantılı kalsın */
   }
 
   .team-name {
-    font-size: 22px;
+    font-size: 22px; /* Daha küçük ekranlar için uygun başlık */
   }
 
   .team-description {
-    font-size: 14px;
+    font-size: 14px; /* Daha okunabilir metin */
     line-height: 1.6;
   }
 
   .teams-section {
-    padding: 50px 0;
+    padding: 50px 0; /* Daha az boşluk */
   }
 
   .section-title {
-    font-size: 28px;
+    font-size: 28px; /* Daha küçük başlık */
     text-align: center;
   }
 
@@ -2276,27 +2253,23 @@ section.highlight {
   }
 
   .container {
-    padding: 0 15px;
-  }
-
-  /* Dokunmatik cihazlar için */
-  @media (hover: none) {
-    .team-card:hover {
-      transform: none;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    }
+    padding: 0 15px; /* Daha az yan boşluk */
   }
 }
 
 /* Çok küçük ekranlar için (576px ve altı) */
 @media (max-width: 576px) {
   .teams-container {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Güvenlik için tekrar tek sütun */
     gap: 15px;
   }
 
+  .team-card {
+    max-width: 100%;
+  }
+
   .team-image {
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 4 / 3; /* Daha kareye yakın bir oran */
   }
 
   .team-name {
@@ -2315,36 +2288,6 @@ section.highlight {
     font-size: 13px;
   }
 }
-
-/* Azaltılmış hareket için */
-@media (prefers-reduced-motion: reduce) {
-  .team-card {
-    transition: none;
-  }
-}
-  
-  @media (max-width: 768px) {
-    .teams-section {
-      padding: 70px 0;
-    }
-    .section-title {
-      font-size: 34px;
-    }
-    .section-description {
-      font-size: 16px;
-      line-height: 1.7;
-      padding: 0 15px;
-    }
-    .team-name {
-      font-size: 24px;
-    }
-    .team-image {
-      height: 260px;
-    }
-    .container {
-      padding: 0 20px;
-    }
-  }
   
 /* Mobil telefon için geliştirilmiş düzenlemeler */
 @media (max-width: 576px) {
@@ -4871,5 +4814,61 @@ select:focus {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+  }
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  touch-action: auto;
+}
+
+#3d-container {
+  width: 100%;
+  height: 80vh; /* HTML'deki 800px yerine */
+  position: relative;
+  overflow: visible;
+  touch-action: auto;
+}
+
+.interaction-hint {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+  #3d-container {
+    width: 100%;
+    height: 80vh;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    touch-action: auto;
+  }
+
+  .interaction-hint {
+    font-size: 12px;
+    padding: 6px 12px;
+    top: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .interaction-hint {
+    font-size: 11px;
+    padding: 5px 10px;
   }
 }
