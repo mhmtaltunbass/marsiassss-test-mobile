@@ -1200,20 +1200,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 });
-// Scroll down button için olay dinleyici
-document.addEventListener('DOMContentLoaded', () => {
-  const scrollDownBtn = document.querySelector('.scroll-down-btn');
-  const targetSection = document.querySelector('#misyon-vizyon'); // Misyon ve Vizyonumuz bölümü
 
-  if (scrollDownBtn && targetSection) {
-    scrollDownBtn.addEventListener('click', () => {
-      targetSection.scrollIntoView({
-        behavior: 'smooth', // Yumuşak kaydırma
-        block: 'start' // Bölümün üst kısmı görünür
-      });
-    });
-  }
-});
 document.addEventListener('DOMContentLoaded', () => {
   const logoLink = document.querySelector('.logo');
   const targetSection = document.querySelector('#anasayfa');
@@ -1228,3 +1215,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+function scrollToNextSection() {
+  // Ana sayfanın sonraki kardeş elementini bul
+  const heroSection = document.getElementById('anasayfa');
+  const nextSection = heroSection.nextElementSibling;
+  
+  // Eğer sonraki bölüm varsa, ona kaydır
+  if (nextSection) {
+    nextSection.scrollIntoView({ behavior: 'smooth' });
+  }
+}
