@@ -4890,128 +4890,153 @@ html, body {
     font-size: 20px; /* Daha küçük ekranlar için */
   }
 }
-/* Yatay aşağı kaydırma göstergesi */
 .scroll-indicator-container {
   position: absolute;
-  bottom: 30px;
+  bottom: 100px;
   left: 0;
   right: 0;
   width: 100%;
-  height: 40px; /* Dikeyde minimal yükseklik */
+  height: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 200;
+  background: none;
+  border: none;
   cursor: pointer;
-  pointer-events: none; /* Container'ın kendisi tıklanabilir değil */
+  padding: 0;
 }
 
 .scroll-indicator {
   width: 100%;
-  max-width: 800px; /* Çok geniş ekranlarda maksimum genişlik */
+  max-width: 500px;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.7) 15%, rgba(0, 0, 0, 0.7) 85%, transparent);
-  border-radius: 5px;
-  pointer-events: auto; /* İçindeki elementler tıklanabilir */
-  transition: all 0.3s ease;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.85) 20%,
+    rgba(0, 0, 0, 0.85) 80%,
+    transparent
+  );
+  border-radius: 10px;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5), 0 0 10px rgba(255, 255, 255, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .scroll-indicator:hover {
-  background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.8) 15%, rgba(0, 0, 0, 0.8) 85%, transparent);
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(0, 0, 0, 0.95) 20%,
+    rgba(0, 0, 0, 0.95) 80%,
+    transparent
+  );
+  transform: scale(1.05);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4);
 }
 
 .arrow-container {
   display: flex;
-  justify-content: space-between;
-  width: 90%;
-  padding: 0 20px;
+  justify-content: center;
+  width: 80%;
+  padding: 0 10px;
 }
 
 .scroll-arrow {
   display: flex;
-  gap: 40px;
-  animation: float-down 1.8s ease-in-out infinite;
+  align-items: center;
+  gap: 25px;
+  animation: wave 1.8s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 .scroll-arrow svg {
-  width: 22px;
-  height: 22px;
-  stroke: white;
-  stroke-width: 2.5;
-  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+  width: 26px;
+  height: 26px;
+  stroke: #fff;
+  stroke-width: 3.2;
+  filter: drop-shadow(0 3px 5px rgba(255, 255, 255, 0.6));
 }
 
-/* Her ok için farklı animasyon zamanlaması */
 .scroll-arrow:nth-child(1) {
   animation-delay: 0s;
 }
 
 .scroll-arrow:nth-child(2) {
-  animation-delay: 0.2s;
+  animation-delay: 0.3s;
 }
 
 .scroll-arrow:nth-child(3) {
-  animation-delay: 0.4s;
+  animation-delay: 0.6s;
 }
 
-/* Aşağı doğru süzülme animasyonu */
-@keyframes float-down {
+@keyframes wave {
   0%, 100% {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     opacity: 0.5;
   }
   50% {
-    transform: translateY(5px);
+    transform: translateY(8px);
     opacity: 1;
   }
 }
 
-/* Mobil cihazlar için uyarlama */
-@media (max-width: 768px) {
-  .arrow-container {
-    width: 95%;
-    gap: 20px;
-  }
-  
-  .scroll-arrow {
-    gap: 20px;
-  }
-}
-
-/* Küçük ekranlar için görünüm */
-@media (max-width: 576px) {
-  .scroll-indicator-container {
-    height: 35px;
-    bottom: 25px;
-  }
-  
-  .arrow-container {
-    width: 100%;
-    padding: 0 10px;
-  }
-  
-  .scroll-arrow {
-    gap: 10px;
-  }
-  
-  .scroll-arrow svg {
-    width: 18px;
-    height: 18px;
-  }
-}
-
-/* Masaüstünde gizle, mobilde göster */
-@media (min-width: 769px) {
-  .scroll-indicator-container {
-    display: none;
-  }
+.scroll-indicator-container:focus {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
 }
 
 @media (max-width: 768px) {
   .scroll-indicator-container {
     display: flex;
+    height: 46px;
+    bottom: 100px;
+  }
+
+  .arrow-container {
+    width: 85%;
+    padding: 0 8px;
+  }
+
+  .scroll-arrow {
+    gap: 20px;
+  }
+
+  .scroll-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+@media (max-width: 576px) {
+  .scroll-indicator-container {
+    height: 42px;
+    bottom: 100px;
+  }
+
+  .arrow-container {
+    width: 90%;
+    padding: 0 6px;
+  }
+
+  .scroll-arrow {
+    gap: 15px;
+  }
+
+  .scroll-arrow svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 3;
+  }
+}
+
+@media (min-width: 769px) {
+  .scroll-indicator-container {
+    display: none;
+    bottom: 100px;
   }
 }

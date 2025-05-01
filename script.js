@@ -1216,13 +1216,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-function scrollToNextSection() {
-  // Ana sayfanın sonraki kardeş elementini bul
+document.addEventListener('DOMContentLoaded', () => {
+  const scrollIndicator = document.querySelector('.scroll-indicator-container');
   const heroSection = document.getElementById('anasayfa');
   const nextSection = heroSection.nextElementSibling;
-  
-  // Eğer sonraki bölüm varsa, ona kaydır
-  if (nextSection) {
-    nextSection.scrollIntoView({ behavior: 'smooth' });
+
+  if (scrollIndicator && nextSection) {
+    scrollIndicator.addEventListener('click', () => {
+      nextSection.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
   }
-}
+});
