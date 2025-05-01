@@ -4872,3 +4872,122 @@ html, body {
     padding: 5px 10px;
   }
 }
+/* Scroll down button stili - Daha belirgin hali */
+.scroll-down-btn {
+  position: absolute;
+  bottom: 30px; /* Alttan daha fazla boşluk */
+  right: 30px; /* Sağdan daha fazla boşluk */
+  background: rgba(0, 0, 0, 0.9); /* Daha koyu arka plan */
+  border: 2px solid rgba(255, 255, 255, 0.5); /* Daha belirgin beyaz çerçeve */
+  border-radius: 50%;
+  width: 60px; /* Daha büyük düğme */
+  height: 60px;
+  display: none; /* Varsayılan olarak gizli */
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 200;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4); /* Daha güçlü gölge */
+  transition: all 0.3s ease;
+  animation: pulse-bounce 2.5s ease-in-out infinite; /* Daha dikkat çekici animasyon */
+}
+
+/* SVG ikon stili */
+.scroll-down-btn svg {
+  width: 28px; /* Daha büyük ikon */
+  height: 28px;
+  stroke: #ffffff; /* Tam beyaz */
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5)); /* İkona parlaklık */
+}
+
+/* Hover efekti */
+.scroll-down-btn:hover {
+  background: rgba(40, 40, 40, 0.95);
+  transform: scale(1.2); /* Daha belirgin ölçek */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.8); /* Hover durumunda daha parlak çerçeve */
+}
+
+/* Aktif durum için stil */
+.scroll-down-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Pulse ve zıplama kombinasyonu animasyonu */
+@keyframes pulse-bounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6), 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+  30% {
+    transform: translateY(-8px) scale(1.05); /* Yukarı zıplama ve hafif büyüme */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 255, 255, 0.5);
+  }
+  60% {
+    transform: translateY(0) scale(1.1); /* Geri dönüş ve biraz daha büyüme */
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.65), 0 0 14px rgba(255, 255, 255, 0.45);
+  }
+}
+
+/* Butonu yalnızca mobil cihazlarda görünür yap, masaüstünde gizle */
+@media (min-width: 769px) {
+  .scroll-down-btn {
+    display: none; /* Masaüstünde gizle */
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-down-btn {
+    display: flex; /* Mobil cihazlarda görünür */
+  }
+}
+
+/* Mobil cihazlar için boyut ayarlaması */
+@media (max-width: 768px) {
+  .scroll-down-btn {
+    width: 54px;
+    height: 54px;
+    bottom: 25px;
+    right: 25px;
+  }
+  
+  .scroll-down-btn svg {
+    width: 26px;
+    height: 26px;
+  }
+}
+
+/* Çok küçük ekranlar için */
+@media (max-width: 576px) {
+  .scroll-down-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .scroll-down-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+.logo {
+  font-size: 24px; /* Varsayılan logo yazı boyutu */
+  color: #fff; /* Beyaz renk (temaya göre değiştirin) */
+  text-decoration: none; /* Alt çizgi kaldırma */
+  transition: color 0.3s ease, transform 0.3s ease; /* Yumuşak geçiş */
+}
+
+.logo:hover {
+  color: #f0f0f0; /* Hafif farklı renk */
+  transform: scale(1.05); /* Hafif büyütme */
+}
+
+/* Mobil cihazlar için */
+@media (max-width: 768px) {
+  .logo {
+    font-size: 20px; /* Daha küçük ekranlar için */
+  }
+}

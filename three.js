@@ -13,75 +13,56 @@ let isLoading = true; // Yükleme durumunu takip et
  * Ana başlatma fonksiyonu - tüm 3D sahne bileşenlerini oluşturur
  */
 function init() {
-    // Kullanıcı arayüzü elemanlarını oluştur (interaction-hint dahil)
+    // Kullanıcı arayüzü elemanlarını oluştur
     createUIElements();
-
+    
     // Yeni bir 3D sahne oluştur
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x000000); // Koyu arka plan
+    scene.background = new THREE.Color(0x000000); // Koyu arka plan ekleyin
 
+    
     // Kamera ayarları
     const container = document.getElementById('3d-container');
-    camera = new THREE.PerspectiveCamera(
-        45, // Görüş açısı
-        container.clientWidth / container.clientHeight, // En/boy oranı
-        0.1, // Yakın düzlem
-        1000 // Uzak düzlem
-    );
-    camera.position.set(0, 25, 50); // Kamerayı heykelden uzaklaştır
-    camera.lookAt(0, 0, 0); // Sahne merkezine odakla
+    // Perspektif kamera oluştur (görüş açısı, en/boy oranı, yakın düzlem, uzak düzlem)
+    camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+    
+    // Kamerayı heykelden daha uzağa konumlandır (orijinal: 0, 4, 7)
+    camera.position.set(0, 25, 50); // Y ve Z değerlerini artırarak kamerayı uzaklaştır
+    camera.lookAt(0, 0, 0); // Kamerayı sahne merkezine odakla
 
-    // Renderer ayarları
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    renderer.physicallyCorrectLights = true;
-    renderer.outputEncoding = THREE.sRGBEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.5;
-    container.appendChild(renderer.domElement);
-
-    // OrbitControls ayarları
+    // Renderer (görüntüleyici) ayarları
+    renderer = new THREE.WebGLRenderer({ antialias: true }); // Kenar yumuşatma ile renderer oluştur
+    renderer.setSize(container.clientWidth, container.clientHeight); // Renderer boyutunu konteyner boyutuna ayarla
+    renderer.setPixelRatio(window.devicePixelRatio); // Ekran piksel oranını kullan (Retina ekranlar için)
+    renderer.shadowMap.enabled = true; // Gölge haritalarını etkinleştir
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap; // Yumuşak gölgeler için PCF gölge haritası kullan
+    renderer.physicallyCorrectLights = true; // Fiziksel olarak doğru ışıklandırma
+    renderer.outputEncoding = THREE.sRGBEncoding; // sRGB renk uzayını kullan
+    renderer.toneMapping = THREE.ACESFilmicToneMapping; // Film benzeri ton eşleme
+    renderer.toneMappingExposure = 1.5; // Ton eşleme pozlaması artırıldı (1.2 → 1.5)
+    container.appendChild(renderer.domElement); // Renderer'ı konteyner içine ekle
+    
+    // OrbitControls'u başlat ve sadece yatay döndürmeye izin ver
     controls = new OrbitControls(camera, renderer.domElement);
-    controls.enablePan = false;
+    controls.enablePan = false; // Panning'i devre dışı bırak
     controls.screenSpacePanning = false;
-    controls.enableZoom = false;
+    controls.enableZoom = false; // Zoom'u devre dışı bırak
+    // controls.minDistance = 20;
+    // controls.maxDistance = 100;
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enableRotate = true;
-    controls.minPolarAngle = Math.PI / 2; // Sadece yatay dönüş
+    controls.minPolarAngle = Math.PI / 2; // Sadece yatay düzlemde döndürmeye izin ver
     controls.maxPolarAngle = Math.PI / 2;
-
-    // Mobil cihazlarda dokunmatik olayları özelleştir (sayfa kaydırmasını desteklemek için)
-    let isModelInteraction = false;
-    container.addEventListener('touchstart', (event) => {
-        if (event.touches.length === 1) {
-            isModelInteraction = false; // Tek parmak: Sayfa kaydırması
-        } else if (event.touches.length >= 2) {
-            isModelInteraction = true; // İki parmak: Model dönüşü
-        }
-    });
-
-    container.addEventListener('touchmove', (event) => {
-        if (!isModelInteraction && event.touches.length === 1) {
-            event.stopPropagation(); // OrbitControls'ün olayı yakalamasını engelle
-        }
-    });
-
-    container.addEventListener('touchend', () => {
-        isModelInteraction = false; // Etkileşimi sıfırla
-    });
 
     // Yıldızlı arka plan oluştur
     createStarryBackground();
-
+    
     // Zemin oluştur
     createFloor();
 
-    // Ortam ışığı ekle
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.4);
+    // Ortam ışığı ekle - sahnenin hiçbir yerin tamamen karanlık olmamasını sağlar
+    const ambientLight = new THREE.AmbientLight(0x404040, 0.4); // Ortam ışık yoğunluğu artırıldı (0.3 → 0.4)
     scene.add(ambientLight);
 
     // Geliştirilmiş ışıklandırma sistemi oluştur
@@ -90,11 +71,12 @@ function init() {
     // Heykel modelini yükle
     createStatue();
 
-    // Pencere boyutu değiştiğinde yeniden boyutlandır
+    // Pencere boyutu değiştiğinde sahnedeki öğeleri yeniden boyutlandır
     window.addEventListener('resize', onWindowResize);
 
     // Animasyon döngüsünü başlat
     animate();
+    
 }
 
 /**
@@ -102,50 +84,44 @@ function init() {
  * Basitleştirilmiş UI, sadece gerekli elemanları içerir
  */
 function createUIElements() {
-    // Body stilini ayarla
+    // Body (sayfa gövdesi) stilini ayarla
     const body = document.body;
     body.style.margin = '0';
     body.style.padding = '0';
-    body.style.overflow = 'auto'; // Dikey kaydırmaya izin ver
+    body.style.overflow = 'scroll';
     body.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
-    // HTML stilini ekle
     const htmlStyle = document.createElement('style');
-    htmlStyle.textContent = `
-        html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-    `;
-    document.head.appendChild(htmlStyle);
+htmlStyle.textContent = `
+    html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        box-sizing: border-box;
+    }
+`;
+document.head.appendChild(htmlStyle);
+    
+// Ana konteyner oluştur - tüm sayfayı kaplayan
+const mainContainer = document.createElement('div');
+mainContainer.style.width = '100vw';
+mainContainer.style.height = '100vh';
+mainContainer.style.display = 'flex';
+mainContainer.style.flexDirection = 'column';
+mainContainer.style.position = 'relative';
+mainContainer.style.overflow = 'hidden'; // Taşmayı önle
+body.appendChild(mainContainer);
 
-    // Ana konteyner oluştur
-    const mainContainer = document.createElement('div');
-    mainContainer.style.width = '100vw';
-    mainContainer.style.height = 'auto'; // Sabit yükseklik yerine otomatik
-    mainContainer.style.display = 'flex';
-    mainContainer.style.flexDirection = 'column';
-    mainContainer.style.position = 'relative';
-    mainContainer.style.overflow = 'visible';
-    body.appendChild(mainContainer);
-
-    // 3D konteyner oluştur
-    const container = document.createElement('div');
-    container.id = '3d-container';
-    container.style.width = '100%';
-    container.style.height = '80vh'; // Mobil için uygun yükseklik
-    container.style.position = 'relative';
-    container.style.overflow = 'visible';
-    mainContainer.appendChild(container);
-
-    // Interaction hint ekle
-    const interactionHint = document.createElement('div');
-    interactionHint.className = 'interaction-hint';
-    interactionHint.textContent = 'İki parmakla modeli döndürün';
-    container.appendChild(interactionHint);
+// 3D içeriği gösterecek ana konteyner
+const container = document.createElement('div');
+container.id = '3d-container';
+container.style.flex = '1';
+container.style.width = '100%';
+container.style.height = '100%'; // Tam yüksekliği kapla
+container.style.position = 'relative';
+container.style.overflow = 'hidden'; // Taşmayı önle
+mainContainer.appendChild(container);
+    
 }
 
 /**
