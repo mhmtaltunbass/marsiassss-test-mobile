@@ -1230,3 +1230,102 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+
+//Projeler Kısmı için scroll fonksiyonu
+document.addEventListener('DOMContentLoaded', function() {
+  const slider = document.querySelector('.projects-slider');
+  const track = document.querySelector('.projects-track');
+  const prevBtn = document.querySelector('.slider-prev');
+  const nextBtn = document.querySelector('.slider-next');
+  const dotsContainer = document.querySelector('.slider-dots');
+  
+  const projects = document.querySelectorAll('.project-card');
+  
+  // Hata kontrolü
+  if (!slider || !track || !prevBtn || !nextBtn || !dotsContainer || projects.length === 0) {
+    console.error('Slider elemanları eksik:', { slider, track, prevBtn, nextBtn, dotsContainer, projects });
+    return;
+  }
+
+  const projectWidth = projects[0].offsetWidth;
+  const gap = 25;
+  const visibleProjects = Math.min(Math.floor(slider.offsetWidth / (projectWidth + gap)), 3);
+  
+  console.log('Slider Width:', slider.offsetWidth);
+  console.log('Project Width:', projectWidth);
+  console.log('Visible Projects:', visibleProjects);
+  
+  let currentIndex = 0;
+  
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    const dotCount = Math.ceil(projects.length / visibleProjects);
+    for (let i = 0; i < dotCount; i++) {
+      const dot = document.createElement('div');
+      dot.classList.add('slider-dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(i));
+      dotsContainer.appendChild(dot);
+    }
+  }
+  
+  function goToSlide(index) {
+    currentIndex = index;
+    updateSlider();
+  }
+  
+  function updateSlider() {
+    const translateX = -currentIndex * (projectWidth + gap) * visibleProjects;
+    console.log('TranslateX:', translateX);
+    track.style.transform = `translateX(${translateX}px)`;
+    
+    const dots = document.querySelectorAll('.slider-dot');
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+    
+    prevBtn.disabled = currentIndex === 0;
+    nextBtn.disabled = currentIndex >= Math.floor(projects.length / visibleProjects) - 1;
+  }
+  
+  function prevSlide() {
+    if (currentIndex > 0) {
+      currentIndex--;
+      updateSlider();
+    }
+  }
+  
+  function nextSlide() {
+    if (currentIndex < Math.floor(projects.length / visibleProjects) - 1) {
+      currentIndex++;
+      updateSlider();
+    }
+  }
+  
+  prevBtn.addEventListener('click', () => {
+    console.log('Önceki butona tıklandı');
+    prevSlide();
+  });
+  
+  nextBtn.addEventListener('click', () => {
+    console.log('Sonraki butona tıklandı');
+    nextSlide();
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+  
+  createDots();
+  updateSlider();
+  
+  window.addEventListener('resize', function() {
+    const newVisibleProjects = Math.min(Math.floor(slider.offsetWidth / (projectWidth + gap)), 3);
+    if (newVisibleProjects !== visibleProjects) {
+      createDots();
+      updateSlider();
+    }
+  });
+});

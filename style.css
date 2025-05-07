@@ -5040,3 +5040,331 @@ html, body {
     bottom: 100px;
   }
 }
+/* =============================================
+   PROJELER BÖLÜMÜ - Karanlık Tema Uyumlu
+   ============================================= */
+
+   .projects-section {
+    padding: 100px 0;
+    background-color: var(--background-light);
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .projects-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 50%, rgba(99, 102, 241, 0.1) 0%, transparent 40%);
+    z-index: 0;
+  }
+  
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+  
+  .section-title {
+    font-size: 2.5rem;
+    color: var(--text-dark);
+    margin-bottom: 15px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background-clip: text;
+    -webkit-backdrop-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  .section-description {
+    color: var(--text-light);
+    font-size: 1.1rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+  
+  /* Slider Container */
+  .slider-container {
+    position: relative;
+    padding: 0 50px;
+    margin: 0 auto;
+  }
+  
+  /* Slider Navigation Arrows */
+  .slider-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(30, 30, 45, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(5px);
+  }
+  
+  .slider-arrow:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+  }
+  
+  .slider-arrow svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  .slider-prev {
+    left: 0;
+  }
+  
+  .slider-next {
+    right: 0;
+  }
+  
+  /* Projects Slider */
+  .projects-slider {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+  }
+  
+  .projects-track {
+    display: flex;
+    transition: transform 0.5s ease;
+    gap: 25px;
+    padding: 10px 0;
+  }
+  
+  /* Project Card */
+  .project-card {
+    min-width: 300px;
+    background: var(--background-card);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-normal);
+    flex-shrink: 0;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+  
+  .project-image {
+    height: 200px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .project-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+  
+  .project-card:hover .project-image img {
+    transform: scale(1.05);
+  }
+  
+  .project-info {
+    padding: 20px;
+    background: rgba(20, 20, 30, 0.7);
+    backdrop-filter: blur(5px);
+  }
+  
+  .project-name {
+    color: var(--text-dark);
+    font-size: 1.25rem;
+    margin: 0;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+  }
+  
+  .project-name::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+    transition: width var(--transition-normal);
+  }
+  
+  .project-card:hover .project-name::after {
+    width: 60px;
+  }
+  
+  /* Slider Dots Navigation */
+  .slider-dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    gap: 10px;
+  }
+  
+  .slider-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+  
+  .slider-dot.active {
+    background-color: var(--primary-color);
+    transform: scale(1.2);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .projects-section {
+      padding: 80px 0;
+    }
+    
+    .section-title {
+      font-size: 2.2rem;
+    }
+    
+    .project-card {
+      min-width: 280px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .projects-section {
+      padding: 60px 0;
+    }
+    
+    .slider-container {
+      padding: 0 40px;
+    }
+    
+    .slider-arrow {
+      width: 40px;
+      height: 40px;
+    }
+    
+    .slider-arrow svg {
+      width: 20px;
+      height: 20px;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+    }
+    
+    .section-description {
+      font-size: 1rem;
+      padding: 0 20px;
+    }
+    
+    .projects-track {
+      gap: 15px;
+    }
+    
+    .project-card {
+      min-width: 260px;
+    }
+    
+    .project-image {
+      height: 180px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .projects-section {
+      padding: 50px 0;
+    }
+    
+    .slider-container {
+      padding: 0 30px;
+    }
+    
+    .slider-arrow {
+      width: 36px;
+      height: 36px;
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+    }
+    
+    .project-card {
+      min-width: 240px;
+    }
+    
+    .project-image {
+      height: 160px;
+    }
+    
+    .project-info {
+      padding: 15px;
+    }
+    
+    .project-name {
+      font-size: 1.1rem;
+    }
+  }
+  
+  /* Animasyonlar */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .section-header {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  .projects-track {
+    animation: fadeInUp 0.8s ease-out 0.2s forwards;
+  }
+  
+  /* Erişilebilirlik */
+  .slider-arrow:focus,
+  .slider-dot:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+  }
+  
+  /* Azaltılmış hareket tercihi */
+  @media (prefers-reduced-motion: reduce) {
+    .projects-track,
+    .project-card,
+    .project-image img,
+    .section-header {
+      animation: none;
+      transition: none;
+    }
+  }
