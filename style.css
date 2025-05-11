@@ -789,6 +789,115 @@ section.highlight {
   100% { background-color: rgba(77, 168, 255, 0); }
 }
 
+/* --- MOBİL MENU-TOGGLE MODERN DÜZENLEME --- */
+@media (max-width: 768px) {
+  .header-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.7rem 1rem;
+    position: relative;
+    min-height: 56px;
+  }
+  .logo {
+    margin-right: 0;
+    font-size: 1.25rem;
+    padding: 0.4rem 0.7rem;
+    display: flex;
+    align-items: center;
+    z-index: 1002;
+  }
+  .menu-toggle {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    background: rgba(30, 30, 30, 0.85);
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    z-index: 1003;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .menu-toggle:active,
+  .menu-toggle:focus {
+    background: rgba(77, 168, 255, 0.18);
+    outline: 2px solid #4da8ff;
+  }
+  .menu-toggle .hamburger {
+    width: 26px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    position: relative;
+    transition: background 0.3s;
+    display: block;
+    margin: 0 auto;
+  }
+  .menu-toggle .hamburger::before,
+  .menu-toggle .hamburger::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 26px;
+    height: 3px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.35s cubic-bezier(0.68,-0.55,0.27,1.55), background 0.3s;
+  }
+  .menu-toggle .hamburger::before {
+    top: -9px;
+  }
+  .menu-toggle .hamburger::after {
+    bottom: -9px;
+  }
+  .menu-toggle.active .hamburger {
+    background: transparent;
+  }
+  .menu-toggle.active .hamburger::before {
+    transform: rotate(45deg) translate(6px, 6px);
+    background: #4da8ff;
+  }
+  .menu-toggle.active .hamburger::after {
+    transform: rotate(-45deg) translate(6px, -6px);
+    background: #4da8ff;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-content {
+    min-height: 48px;
+    padding: 0.5rem 0.5rem;
+  }
+  .logo {
+    font-size: 1.1rem;
+    padding: 0.3rem 0.5rem;
+  }
+  .menu-toggle {
+    width: 38px;
+    height: 38px;
+    right: 0.5rem;
+  }
+  .menu-toggle .hamburger,
+  .menu-toggle .hamburger::before,
+  .menu-toggle .hamburger::after {
+    width: 20px;
+    height: 2.5px;
+  }
+  .menu-toggle .hamburger::before {
+    top: -7px;
+  }
+  .menu-toggle .hamburger::after {
+    bottom: -7px;
+  }
+}
+
 
 /* =============================================
    HERO SECTION WITH PARALLAX AND 3D MODEL
@@ -6112,4 +6221,154 @@ nav ul li.has-dropdown ul.dropdown li a {
 .blog-post.fullscreen .post-author span {
   font-size: 0.9rem;
 }
+}
+
+/* Menü Toggle Aktif Animasyon ve Boyut Sorunu Düzeltme */
+@media (max-width: 768px) {
+  .menu-toggle {
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s !important;
+    will-change: transform;
+    /* Büyüme animasyonunu kaldır, sabit kalsın */
+    transform: translateY(-50%) scale(1) !important;
+  }
+  .menu-toggle.active {
+    background: rgba(77, 168, 255, 0.18);
+    /* Büyüme yok, sadece renk değişimi */
+    transform: translateY(-50%) scale(1) !important;
+    box-shadow: 0 4px 16px rgba(77,168,255,0.12);
+  }
+  .menu-toggle .hamburger,
+  .menu-toggle .hamburger::before,
+  .menu-toggle .hamburger::after {
+    transition: background 0.3s, transform 0.35s cubic-bezier(0.68,-0.55,0.27,1.55);
+    background: #fff;
+  }
+  .menu-toggle.active .hamburger {
+    background: transparent;
+  }
+  .menu-toggle.active .hamburger::before {
+    transform: rotate(45deg) translate(6px, 6px);
+    background: #4da8ff;
+  }
+  .menu-toggle.active .hamburger::after {
+    transform: rotate(-45deg) translate(6px, -6px);
+    background: #4da8ff;
+  }
+  .menu-toggle .hamburger::before,
+  .menu-toggle .hamburger::after {
+    border-radius: 2px;
+    left: 0;
+    width: 26px;
+    height: 3px;
+  }
+}
+
+/* Menü açıldığında hamburger ikonunun taşmaması için overflow düzeltme */
+.menu-toggle {
+  overflow: visible !important;
+}
+
+/* Mobilde ana menü ögeleri üstte büyük ve belirgin */
+@media (max-width: 768px) {
+  .main-nav {
+    padding-top: 4.5rem;
+  }
+  .main-nav ul {
+    margin: 0;
+    padding: 0;
+  }
+  .main-nav > ul > li {
+    margin-bottom: 0.5rem;
+  }
+  .main-nav > ul > li > a {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 1.1rem 1.5rem;
+    border-radius: 12px;
+    background: rgba(77,168,255,0.08);
+    color: #fff;
+    margin-bottom: 0.2rem;
+    box-shadow: 0 2px 8px rgba(77,168,255,0.04);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    position: relative;
+    z-index: 2;
+  }
+  .main-nav > ul > li > a.active,
+  .main-nav > ul > li > a:focus,
+  .main-nav > ul > li > a:hover {
+    background: linear-gradient(90deg, #4da8ff 60%, #8ccdff 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(77,168,255,0.12);
+  }
+  /* Dropdown menü modern kart görünümü */
+  .main-nav ul li.has-dropdown ul.dropdown {
+    background: rgba(30, 40, 60, 0.98);
+    border-radius: 18px;
+    box-shadow: 0 8px 32px rgba(77,168,255,0.18), 0 1.5px 8px rgba(0,0,0,0.10);
+    margin-top: 20px;
+    padding: 1.2rem 0.5rem 1.2rem 0.5rem;
+    max-height: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: none;
+    transition: max-height 0.3s, opacity 0.3s, visibility 0.3s, box-shadow 0.3s, background 0.3s, padding 0.3s;
+    animation: none;
+    display: block !important;
+    overflow: hidden;
+  }
+  .main-nav ul li.has-dropdown.active ul.dropdown {
+    max-height: 500px;
+    opacity: 1;
+    visibility: visible;
+    transition: max-height 0.3s, opacity 0.3s, visibility 0.3s;
+  }
+  .main-nav ul li.has-dropdown ul.dropdown li a {
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: #eaf6ff;
+    background: none;
+    border-radius: 8px;
+    padding: 0.9rem 1.8rem;
+    margin: 0.1rem 0;
+    transition: background 0.2s, color 0.2s;
+  }
+  .main-nav ul li.has-dropdown ul.dropdown li a:hover,
+  .main-nav ul li.has-dropdown ul.dropdown li a.active {
+    background: linear-gradient(90deg, #4da8ff 60%, #8ccdff 100%);
+    color: #fff;
+  }
+}
+
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Menü açıldığında menü butonu sabit kalsın ve taşmasın */
+.menu-toggle {
+  position: absolute;
+  top: 50%;
+  right: 1rem;
+  z-index: 1003;
+}
+@media (max-width: 600px) {
+  .menu-toggle {
+    right: 0.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  /* Menü açıldığında hamburger ikonu çarpı olmasın, her zaman hamburger olarak kalsın */
+  .menu-toggle.active .hamburger {
+    background: #fff;
+  }
+  .menu-toggle.active .hamburger::before {
+    transform: none;
+    background: #fff;
+  }
+  .menu-toggle.active .hamburger::after {
+    transform: none;
+    background: #fff;
+  }
 }
